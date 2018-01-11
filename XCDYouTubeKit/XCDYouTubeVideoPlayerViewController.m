@@ -24,6 +24,7 @@ NSString *const XCDYouTubeVideoUserInfoKey = @"Video";
 @interface XCDYouTubeVideoPlayerViewController ()
 @property (nonatomic, weak) id<XCDYouTubeOperation> videoOperation;
 @property (nonatomic, assign, getter = isEmbedded) BOOL embedded;
+@property (nonatomic, strong)XCDYouTubeVideo *currentVideo;
 @end
 
 @implementation XCDYouTubeVideoPlayerViewController
@@ -107,30 +108,54 @@ NSString *const XCDYouTubeVideoUserInfoKey = @"Video";
 	[self.videoOperation cancel];
 	self.videoOperation = [[XCDYouTubeClient defaultClient] getVideoWithIdentifier:videoIdentifier completionHandler:^(XCDYouTubeVideo *video, NSError *error)
 	{
+        self.currentVideo = video;
 		if (video)
 		{
-			NSURL *streamURL = nil;
-			for (NSNumber *videoQuality in self.preferredVideoQualities)
-			{
-				streamURL = video.streamURLs[videoQuality];
-				if (streamURL)
-				{
-					[self startVideo:video streamURL:streamURL];
-					break;
-				}
-			}
-			
-			if (!streamURL)
-			{
-				NSError *noStreamError = [NSError errorWithDomain:XCDYouTubeVideoErrorDomain code:XCDYouTubeErrorNoStreamAvailable userInfo:nil];
-				[self stopWithError:noStreamError];
-			}
+            [self playVideo:video];
 		}
 		else
 		{
 			[self stopWithError:error];
 		}
 	}];
+}
+
+-(void)playVideo:(XCDYouTubeVideo*)video
+{
+	NSURL *streamURL = nil;
+	for (NSNumber *videoQuality in self.preferredVideoQualities){
+		streamURL = video.streamURLs[videoQuality];
+		if (streamURL){
+			[self startVideo:video streamURL:streamURL];
+			[self.moviePlayer prepareToPlay];
+			[self.moviePlayer play];
+			break;
+		}
+	}
+	if(!streamURL && video.streamURLs.count>0){
+		NSArray *recheck = @[ @(XCDYouTubeVideoQualityHD720), @(XCDYouTubeVideoQualityMedium360), @(XCDYouTubeVideoQualitySmall240),XCDYouTubeVideoQualityHTTPLiveStreaming ];
+		for (NSNumber *videoQuality in recheck){
+			streamURL = video.streamURLs[videoQuality];
+			if (streamURL){
+				[self startVideo:video streamURL:streamURL];
+				[self.moviePlayer prepareToPlay];
+				[self.moviePlayer play];
+				break;
+			}
+		}
+	}
+	if (!streamURL){
+		NSError *noStreamError = [NSError errorWithDomain:XCDYouTubeVideoErrorDomain code:XCDYouTubeErrorNoStreamAvailable userInfo:nil];
+		[self stopWithError:noStreamError];
+	}
+}
+-(void)reselectVideo
+{
+	XCDYouTubeVideo *video = self.currentVideo;
+	if (video)
+	{
+		[self playVideo:video];
+	}
 }
 
 - (void) presentInView:(UIView *)view
