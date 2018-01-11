@@ -114,6 +114,8 @@ DEPRECATED_MSG_ATTRIBUTE("Use `AVFoundation` or `AVKit` APIs instead.")
  */
 - (void) presentInView:(UIView *)view;
 
+- (void) reselectVideo;
+
 @end
 
 /**
