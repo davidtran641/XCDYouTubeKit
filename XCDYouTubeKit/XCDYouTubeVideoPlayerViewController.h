@@ -109,6 +109,8 @@ MP_EXTERN NSString *const XCDYouTubeVideoUserInfoKey;
  */
 - (void) presentInView:(UIView *)view;
 
+- (void) reselectVideo;
+
 @end
 
 /**
