@@ -1,3 +1,73 @@
+#### Version 2.9.0
+
+* Add the ability to use custom regular expression patterns via `-[XCDYouTubeClient getVideoWithIdentifier:cookies:customPatterns:completionHandler:]` & `initWithVideoIdentifier:cookies:languageIdentifier:customPatterns` (#463, #199)
+* Add new `viewCount` property in `XCDYouTubeVideo` (#460)
+* Silence warning about deprecated implementation (#450)
+
+#### Version 2.8.3
+
+* Adaptation to YouTube API change. (#458)
+
+#### Version 2.8.2
+
+* Add new `streamURL` property on `XCDYouTubeVideo`
+* Fixed Swift Package Manager (#441)
+* Support iOS 13 in Demo Projects
+  * Support background playback (#427, #442)
+
+#### Version 2.8.1
+
+* Adaptation to YouTube API change. (#447, #448, #449)
+
+#### Version 2.8.0
+
+* Adaptation to YouTube API change.
+	* Deprecated `XCDYouTubeErrorRestrictedPlayback` & `XCDYouTubeErrorInvalidVideoIdentifier` use `XCDYouTubeErrorNoStreamAvailable` instead.
+
+#### Version 2.7.8
+
+* Adaptation to YouTube API change. (#443)
+
+#### Version 2.7.7
+
+* Add another player script regular expression (#438)
+
+#### Version 2.7.6
+
+* Adaptation to YouTube API change. (#437)
+
+#### Version 2.7.5
+
+* Adaptation to YouTube API change. (#433)
+
+#### Version 2.7.4
+
+* Add the ability to fetch certain age-gate videos. (#431)
+
+#### Version 2.7.3
+
+* Adaptation to YouTube API change. (#419, #422. #421)
+* Fix JavaScript exception: ReferenceError (#418, #420)
+
+#### Version 2.7.2
+
+* Adaptation to YouTube API change. (#417)
+
+#### Version 2.7.1
+
+* Fixed Xcode project parsing error (#409, #411)
+
+#### Version 2.7.0
+
+* Add the ability assign cookies via `-[XCDYouTubeClient getVideoWithIdentifier:cookies:completionHandler:]` & `initWithVideoIdentifier:cookies:languageIdentifier:`
+* Add the ability to fetch videos allowed to be watched on youtube only (#315, #309)
+* Deprecated `XCDYouTubeVideoPlayerViewController` (#157)
+* Fixed internal JavaScript exception (#375, #397)
+
+#### Version 2.6.1
+
+* Adaptation to YouTube API change. (#406)
+
 #### Version 2.6.0
 
 * Adaptation to YouTube API change. (#383, #388, #385, #382)

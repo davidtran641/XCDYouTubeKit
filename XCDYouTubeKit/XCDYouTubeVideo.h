@@ -74,6 +74,10 @@ extern NSString *const XCDYouTubeVideoQualityHTTPLiveStreaming;
  */
 @property (nonatomic, readonly) NSTimeInterval duration;
 /**
+ *  The views count of the video.
+ */
+@property (nonatomic, readonly) NSInteger viewCount;
+/**
  *  A thumbnail URL for an image of small size, i.e. 120×90. May be nil.
  */
 @property (nonatomic, readonly, nullable) NSURL *thumbnailURL;
@@ -105,6 +109,13 @@ extern NSString *const XCDYouTubeVideoQualityHTTPLiveStreaming;
 #else
 @property (nonatomic, readonly) NSDictionary *streamURLs;
 #endif
+
+/**
+
+*  A streamURL that is compatible on Apple devices.
+*  The `streamURLs` may contain both video and audio streams, some video streams do not contain any audio. This property will return a video stream that contains both audio and video with a maximum video quality of 720p in the case of videos that aren't live. Also, this properly will return the URL to a live stream in the case of live videos.
+*/
+@property (nonatomic, readonly) NSURL *streamURL;
 
 /**
 
